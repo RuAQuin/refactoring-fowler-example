@@ -42,11 +42,7 @@ public class Customer {
 			thisAmount = importe(thisAmount, each);
 			
 			// add frequent renter points
-			frequentRenterPoints++;
-			// add bonus for a two day new release rental
-			if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE)
-					&& each.getDaysRented() > 1)
-				frequentRenterPoints++;
+			frequentRenterPoints = calculoPuntos(frequentRenterPoints, each);
 			// show figures for this rental
 			result += "\t" + each.getMovie().getTitle() + "\t"
 					+ String.valueOf(thisAmount) + "\n";
@@ -57,6 +53,15 @@ public class Customer {
 		result += "You earned " + String.valueOf(frequentRenterPoints)
 				+ " frequent renter points";
 		return result;
+	}
+
+	private int calculoPuntos(int points, Rental rental) {
+		points++;
+		// add bonus for a two day new release rental
+		if ((rental.getMovie().getPriceCode() == Movie.NEW_RELEASE)
+				&& rental.getDaysRented() > 1)
+			points++;
+		return points;
 	}
 
 	private double importe(double rentalCharge, Rental rental) {
