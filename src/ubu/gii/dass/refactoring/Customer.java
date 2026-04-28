@@ -39,10 +39,10 @@ public class Customer {
 			double thisAmount = 0;
 			Rental each = rentals.next();
 			// determine amounts for each line
-			thisAmount = importe(each);
+			thisAmount = getCharge(each);
 			
 			// add frequent renter points
-			frequentRenterPoints += calculoPuntos(each); // Añade la posibilidad de almacenar puntos.
+			frequentRenterPoints += getFrequentRenterPoints(each); // Añade la posibilidad de almacenar puntos.
 			// show figures for this rental
 			result += "\t" + each.getMovie().getTitle() + "\t"
 					+ String.valueOf(thisAmount) + "\n";
@@ -55,7 +55,7 @@ public class Customer {
 		return result;
 	}
 
-	private int calculoPuntos(Rental rental) {
+	private int getFrequentRenterPoints(Rental rental) {
 		int points = 1;
 		// add bonus for a two day new release rental
 		if ((rental.getMovie().getPriceCode() == Movie.NEW_RELEASE)
@@ -64,7 +64,7 @@ public class Customer {
 		return points;
 	}
 
-	private double importe(Rental rental) {
+	private double getCharge(Rental rental) {
 		double rentalCharge = 0;
 		
 		switch (rental.getMovie().getPriceCode()) {
