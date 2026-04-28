@@ -39,49 +39,39 @@ public class Customer {
 			double thisAmount = 0;
 			Rental each = rentals.next();
 			// determine amounts for each line
-			thisAmount = getCharge(each);
-			
+			thisAmount = each.getCharge();
+
 			// add frequent renter points
-			frequentRenterPoints += getFrequentRenterPoints(each); // Añade la posibilidad de almacenar puntos.
+			frequentRenterPoints += each.getFrecuentRenterPoints(); // Añade la posibilidad de almacenar puntos.
 			// show figures for this rental
-			result += "\t" + each.getMovie().getTitle() + "\t"
-					+ String.valueOf(thisAmount) + "\n";
+			result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(thisAmount) + "\n";
 			totalAmount += thisAmount;
 		}
 		// add footer lines
 		result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-		result += "You earned " + String.valueOf(frequentRenterPoints)
-				+ " frequent renter points";
+		result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
 		return result;
 	}
 
-	private int getFrequentRenterPoints(Rental rental) {
-		int points = 1;
-		// add bonus for a two day new release rental
-		if ((rental.getMovie().getPriceCode() == Movie.NEW_RELEASE)
-				&& rental.getDaysRented() > 1)
-			points++;
-		return points;
+	public String htmlStatement() {
+		double totalAmount = 0;
+		int frequentRenterPoints = 0;
+		Enumeration<Rental> rentals = _rentals.elements();
+		String result = "<H1>Rental Record for " + getName() + "</H1>";
+		while (rentals.hasMoreElements()) {
+			double thisAmount = 0;
+			Rental each = rentals.nextElement();
+			// determine amounts for each line
+			thisAmount = each.getCharge();
+			frequentRenterPoints += each.getFrecuentRenterPoints();
+			// show figures for this rental
+			result += "<H2>" + each.getMovie().getTitle() + " " + String.valueOf(thisAmount) + "</H2>";
+			totalAmount += thisAmount;
+		}
+		// add footer lines
+		result += "<P>Amount owed is " + String.valueOf(totalAmount) + "</P>";
+		result += "<P> You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points </P>";
+		return result;
 	}
 
-	private double getCharge(Rental rental) {
-		double rentalCharge = 0;
-		
-		switch (rental.getMovie().getPriceCode()) {
-		case Movie.REGULAR:
-			rentalCharge += 2;
-			if (rental.getDaysRented() > 2)
-				rentalCharge += (rental.getDaysRented() - 2) * 1.5;
-			break;
-		case Movie.NEW_RELEASE:
-			rentalCharge += rental.getDaysRented() * 3;
-			break;
-		case Movie.CHILDRENS:
-			rentalCharge += 1.5;
-			if (rental.getDaysRented() > 3)
-				rentalCharge += (rental.getDaysRented() - 3) * 1.5;
-			break;
-		}
-		return rentalCharge;
-	}
 }
