@@ -31,47 +31,56 @@ public class Customer {
 	};
 
 	public String statement() {
-		double totalAmount = 0;
-		int frequentRenterPoints = 0;
 		Iterator<Rental> rentals = _rentals.iterator();
 		String result = "Rental Record for " + getName() + "\n";
 		while (rentals.hasNext()) {
-			double thisAmount = 0;
 			Rental each = rentals.next();
 			// determine amounts for each line
-			thisAmount = each.getCharge();
-
-			// add frequent renter points
-			frequentRenterPoints += each.getFrecuentRenterPoints(); // Añade la posibilidad de almacenar puntos.
+			double thisAmount = each.getCharge();
 			// show figures for this rental
 			result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(thisAmount) + "\n";
-			totalAmount += thisAmount;
 		}
-		// add footer lines
-		result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-		result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
+		// Se añaden los totales reutilizando métodos comunes para evitar duplicación.
+		result += "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
+		result += "You earned " + String.valueOf(getTotalFrequentRenterPoints()) + " frequent renter points";
 		return result;
 	}
 
 	public String htmlStatement() {
-		double totalAmount = 0;
-		int frequentRenterPoints = 0;
-		Enumeration<Rental> rentals = _rentals.elements();
-		String result = "<H1>Rental Record for " + getName() + "</H1>";
-		while (rentals.hasMoreElements()) {
-			double thisAmount = 0;
-			Rental each = rentals.nextElement();
-			// determine amounts for each line
-			thisAmount = each.getCharge();
-			frequentRenterPoints += each.getFrecuentRenterPoints();
-			// show figures for this rental
-			result += "<H2>" + each.getMovie().getTitle() + " " + String.valueOf(thisAmount) + "</H2>";
-			totalAmount += thisAmount;
-		}
-		// add footer lines
-		result += "<P>Amount owed is " + String.valueOf(totalAmount) + "</P>";
-		result += "<P> You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points </P>";
-		return result;
+	    Iterator<Rental> rentals = _rentals.iterator();
+	    String result = "<H1>Rental Record for " + getName() + "</H1>";
+	while (rentals.hasNext()) {
+	    Rental each = rentals.next();
+	    // determine amounts for each line
+	double thisAmount = each.getCharge();
+	// show figures for this rental
+	result += "<H2>" + each.getMovie().getTitle() + " " + String.valueOf(thisAmount) + "</H2>";
+	}
+	// Se añaden los totales reutilizando métodos comunes para evitar duplicación.
+	result += "<P>Amount owed is " + String.valueOf(getTotalCharge()) + "</P>";
+	result += "<P> You earned " + String.valueOf(getTotalFrequentRenterPoints()) + " frequent renter points </P>";
+	    return result;
 	}
 
+	private double getTotalCharge() {
+	    double result = 0;
+	    Iterator<Rental> rentals = _rentals.iterator();
+	    while (rentals.hasNext()) {
+	        Rental each = rentals.next();
+	        // Se acumula el importe de cada alquiler.
+	        result += each.getCharge();
+	    }
+	    return result;
+	}
+
+	private int getTotalFrequentRenterPoints() {
+	    int result = 0;
+	    Iterator<Rental> rentals = _rentals.iterator();
+	    while (rentals.hasNext()) {
+	        Rental each = rentals.next();
+	        // Se acumulan los puntos frecuentes calculados por cada alquiler.
+	        result += each.getFrecuentRenterPoints();
+	    }
+	    return result;
+	}	
 }
