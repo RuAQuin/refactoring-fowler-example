@@ -79,7 +79,7 @@ public class Customer {
 	    while (rentals.hasNext()) {
 	        Rental each = rentals.next();
 	        // Se acumulan los puntos frecuentes calculados por cada alquiler.
-	        result += each.getFrecuentRenterPoints();
+	        result += each.getFrequentRenterPoints();
 	    }
 	    return result;
 	}	
