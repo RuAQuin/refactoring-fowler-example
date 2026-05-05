@@ -2,10 +2,11 @@ package ubu.gii.dass.refactoring;
 
 public class ChildrensPrice extends Price {
 
+	public static final int CHILDRENS = 2;
+
 	@Override
 	public int getPriceCode() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ChildrensPrice.CHILDRENS;
 	}
 
 	@Override

@@ -2,10 +2,11 @@ package ubu.gii.dass.refactoring;
 
 public class RegularPrice extends Price {
 
+	public static final int REGULAR = 0;
+
 	@Override
 	public int getPriceCode() {
-		// TODO Auto-generated method stub
-		return 0;
+		return RegularPrice.REGULAR;
 	}
 
 	@Override
