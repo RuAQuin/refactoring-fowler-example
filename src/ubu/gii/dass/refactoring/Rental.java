@@ -34,12 +34,11 @@ public class Rental {
 		return _movie.getCharge(this);
 	}
 
+	/**
+	 * @deprecated Use {@link ubu.gii.dass.refactoring.Movie#getFrequentRenterPoints(ubu.gii.dass.refactoring.Rental)} instead
+	 */
 	public int getFrequentRenterPoints() {
-		int points = 1;
-		// add bonus for a two day new release rental
-		if ((getMovie().getPriceCode() == Movie.NEW_RELEASE) && getDaysRented() > 1)
-			points++;
-		return points;
+		return _movie.getFrequentRenterPoints(this);
 	}
 
 }
