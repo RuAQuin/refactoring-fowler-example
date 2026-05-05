@@ -29,12 +29,12 @@ public class Rental {
 
 	
 	public double getCharge() {
-		return _movie.getCharge(this);
+		return _movie.getCharge(this, this.getDaysRented());
 	}
 
 	
 	public int getFrequentRenterPoints() {
-		return _movie.getFrequentRenterPoints(this);
+		return _movie.getFrequentRenterPoints(this, this.getDaysRented());
 	}
 
 }
