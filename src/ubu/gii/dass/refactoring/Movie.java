@@ -35,4 +35,25 @@ public class Movie {
 	public String getTitle() {
 		return _title;
 	}
+
+	public double getCharge(Rental rental) {
+		double rentalCharge = 0;
+	
+		switch (rental.getMovie().getPriceCode()) {
+		case Movie.REGULAR:
+			rentalCharge += 2;
+			if (rental.getDaysRented() > 2)
+				rentalCharge += (rental.getDaysRented() - 2) * 1.5;
+			break;
+		case Movie.NEW_RELEASE:
+			rentalCharge += rental.getDaysRented() * 3;
+			break;
+		case Movie.CHILDRENS:
+			rentalCharge += 1.5;
+			if (rental.getDaysRented() > 3)
+				rentalCharge += (rental.getDaysRented() - 3) * 1.5;
+			break;
+		}
+		return rentalCharge;
+	}
 }
