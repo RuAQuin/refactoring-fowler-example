@@ -33,24 +33,7 @@ public class Movie {
 	}
 
 	public double getCharge(int daysRented) {
-		double rentalCharge = 0;
-	
-		switch (this.getPriceCode()) {
-		case RegularPrice.REGULAR:
-			rentalCharge += 2;
-			if (daysRented > 2)
-				rentalCharge += (daysRented - 2) * 1.5;
-			break;
-		case NewReleasePrice.NEW_RELEASE:
-			rentalCharge += daysRented * 3;
-			break;
-		case ChildrensPrice.CHILDRENS:
-			rentalCharge += 1.5;
-			if (daysRented > 3)
-				rentalCharge += (daysRented - 3) * 1.5;
-			break;
-		}
-		return rentalCharge;
+		return _price.getCharge(daysRented);
 	}
 
 	public int getFrequentRenterPoints(int daysRented) {
