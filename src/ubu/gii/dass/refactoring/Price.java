@@ -33,6 +33,10 @@ public abstract class Price {
 	 * @return puntos frecuentes obtenidos.
 	 */	
 	public int getFrequentRenterPoints(int daysRented) {
-		return 1;
+		int points = 1;
+		// add bonus for a two day new release rental
+		if ((this.getPriceCode() == NewReleasePrice.NEW_RELEASE) && daysRented > 1)
+			points++;
+		return points;
 	}
 }
